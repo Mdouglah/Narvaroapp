@@ -38,13 +38,19 @@ export default function App() {
     }))
   }
 
+  // Rektor beslutar aktivt om steg 3 – triggas inte automatiskt
+  function beslutaSteg3(studentId, value) {
+    updateStudent(studentId, s => ({ ...s, steg3Beslut: value }))
+  }
+
   function addStudent(data) {
     const newStudent = {
       id: Date.now(),
       ...data,
+      steg3Beslut: false,
       logs: [],
-      steg2Checks: { k1: false, k2: false, k3: false, k4: false },
-      steg3Checks: { u1: false, u2: false, u3: false, u4: false },
+      steg2Checks: { k1: false, k2: false, k3: false, k4: false, k5: false },
+      steg3Checks: { u1: false, u2: false, u3: false, u4: false, u5: false },
     }
     setStudents(prev => [...prev, newStudent])
   }
@@ -77,7 +83,10 @@ export default function App() {
           />
         )}
         {role === 'rektor' && (
-          <RektorView students={enriched} />
+          <RektorView
+            students={enriched}
+            beslutaSteg3={beslutaSteg3}
+          />
         )}
       </main>
     </div>
