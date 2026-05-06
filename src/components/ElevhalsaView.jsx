@@ -6,10 +6,11 @@ import styles from './ElevhalsaView.module.css'
 const LOG_TYPES = ['Notering', 'Kontakt', 'Möte', 'Kartläggning', 'Utredning']
 
 const STEG3_ITEMS = [
-  { key: 'u1', label: 'Ärendet överlämnat från mentor' },
-  { key: 'u2', label: 'Fördjupad utredning påbörjad (intervju elev, VH, personal)' },
+  { key: 'u1', label: 'Ärendet överlämnat från mentor – rektors beslut bekräftat' },
+  { key: 'u2', label: 'Fördjupad utredning påbörjad (intervju med elev, vårdnadshavare och personal)' },
   { key: 'u3', label: 'Tvärprofessionell analys genomförd' },
-  { key: 'u4', label: 'Samråds-/nätverksmöte genomfört' },
+  { key: 'u4', label: 'Samverkan med externa aktörer vid behov (BUP, Socialtjänsten, Familjens hus)' },
+  { key: 'u5', label: 'Samråds-/nätverksmöte genomfört – insatser planerade' },
 ]
 
 export default function ElevhalsaView({ students, addLog, toggleSteg3Check }) {
@@ -48,18 +49,25 @@ export default function ElevhalsaView({ students, addLog, toggleSteg3Check }) {
                   <Avatar name={s.name} color={getStegColor(s.steg)} />
                   <div className={styles.arendeInfo}>
                     <div className={styles.arendeName}>{s.name}</div>
-                    <div className={styles.arendeMeta}>{s.klass} · {s.dagarIFoljd} dagar i följd · {s.separataTillfallen} tillfällen · {s.totalProcent}% totalt</div>
+                    <div className={styles.arendeMeta}>
+                      {s.klass}
+                      {s.mentor ? ` · Mentor: ${s.mentor}` : ''}
+                      {' · '}
+                      {s.dagarIFoljd} dagar i följd · {s.separataTillfallen} tillfällen · {s.totalProcent}% totalt
+                    </div>
                   </div>
                   <Badge color={getStegColor(s.steg)}>{getStegLabel(s.steg)}</Badge>
                 </div>
+
                 {s.steg >= 2 && (
                   <div className={styles.steg2Status}>
                     <div className={styles.steg2Title}>Mentor – steg 2 status</div>
                     {[
-                      { key: 'k1', label: 'Hemmet informerat / kartläggning 1' },
-                      { key: 'k2', label: 'Kartläggning genomförd' },
-                      { key: 'k3', label: 'Åtgärder beslutade' },
-                      { key: 'k4', label: 'Handlingsplan upprättad' },
+                      { key: 'k1', label: 'Enskilt samtal med eleven' },
+                      { key: 'k2', label: 'Hemmet kontaktat och dokumenterat i Prorenata' },
+                      { key: 'k3', label: 'Fysiskt möte bokat med elev och vårdnadshavare' },
+                      { key: 'k4', label: 'Mötet genomfört och dokumenterat i Prorenata' },
+                      { key: 'k5', label: 'Uppföljning inplanerad (2–3 veckor)' },
                     ].map(item => (
                       <div key={item.key} className={styles.statusRow}>
                         <span className={`${styles.statusDot} ${s.steg2Checks[item.key] ? styles.done : styles.notDone}`} />
@@ -67,6 +75,12 @@ export default function ElevhalsaView({ students, addLog, toggleSteg3Check }) {
                         {s.steg2Checks[item.key] && <span className={styles.statusOk}>klar</span>}
                       </div>
                     ))}
+                  </div>
+                )}
+
+                {s.steg === 3 && (
+                  <div className={styles.steg3Badge}>
+                    🔴 Rektor har beslutat om steg 3 – fördjupad utredning pågår
                   </div>
                 )}
               </Card>
@@ -85,9 +99,24 @@ export default function ElevhalsaView({ students, addLog, toggleSteg3Check }) {
                   <Avatar name={s.name} color="danger" size="lg" />
                   <div>
                     <div className={styles.utredName}>{s.name}</div>
-                    <div className={styles.utredMeta}>{s.klass} · <Badge color="danger">Problematisk frånvaro</Badge></div>
+                    <div className={styles.utredMeta}>
+                      {s.klass}
+                      {s.mentor ? ` · Mentor: ${s.mentor}` : ''}
+                      {' · '}
+                      <Badge color="danger">Problematisk frånvaro</Badge>
+                    </div>
                   </div>
                 </div>
+
+                <div className={styles.actorsBox}>
+                  <div className={styles.actorsTitle}>Möjliga samverkansaktörer</div>
+                  <div className={styles.actorsList}>
+                    {['BUP', 'Socialtjänsten', 'Familjens hus'].map(a => (
+                      <span key={a} className={styles.actorChip}>{a}</span>
+                    ))}
+                  </div>
+                </div>
+
                 <div className={styles.checklistSection}>
                   <div className={styles.checklistTitle}>Utredningschecklista</div>
                   {STEG3_ITEMS.map(item => (
@@ -96,6 +125,7 @@ export default function ElevhalsaView({ students, addLog, toggleSteg3Check }) {
                     </CheckItem>
                   ))}
                 </div>
+
                 <div className={styles.progress}>
                   {Object.values(s.steg3Checks).filter(Boolean).length} av {STEG3_ITEMS.length} steg klara
                 </div>
@@ -126,14 +156,27 @@ export default function ElevhalsaView({ students, addLog, toggleSteg3Check }) {
                 <Avatar name={selected.name} color={getStegColor(selected.steg)} />
                 <div>
                   <div className={styles.docName}>{selected.name}</div>
-                  <div className={styles.docKlass}>{selected.klass}</div>
+                  <div className={styles.docKlass}>
+                    {selected.klass}{selected.mentor ? ` · Mentor: ${selected.mentor}` : ''}
+                  </div>
                 </div>
               </div>
+
+              <div className={styles.prorenataNote}>
+                📋 <strong>Kom ihåg:</strong> Dokumentera även i <strong>Prorenata</strong>.
+              </div>
+
               <div className={styles.logForm}>
                 <select value={logType} onChange={e => setLogType(e.target.value)} className={styles.logSelect}>
                   {LOG_TYPES.map(t => <option key={t}>{t}</option>)}
                 </select>
-                <input className={styles.logInput} placeholder="Skriv anteckning..." value={logText} onChange={e => setLogText(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleAddLog()} />
+                <input
+                  className={styles.logInput}
+                  placeholder="Skriv anteckning..."
+                  value={logText}
+                  onChange={e => setLogText(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleAddLog()}
+                />
                 <button className={styles.logBtn} onClick={handleAddLog}>Spara</button>
               </div>
               <div>
