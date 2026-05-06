@@ -14,7 +14,7 @@ export default function Header({ role, setRole }) {
           <div className={styles.logo}>N</div>
           <div>
             <div className={styles.title}>Närvaro</div>
-            <div className={styles.school}>Bergvretenskolan</div>
+            <div className={styles.school}>Korsängsskolan</div>
           </div>
         </div>
         <div className={styles.roleBar}>
