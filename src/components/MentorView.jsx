@@ -4,10 +4,11 @@ import { Badge, Avatar, Card, StatPill, WarnBanner, EmptyState, LogEntry, CheckI
 import styles from './MentorView.module.css'
 
 const STEG2_ITEMS = [
-  { key: 'k1', label: 'Hemmet informerat – möte bokat (kartläggning 1)' },
-  { key: 'k2', label: 'Kartläggning genomförd med elev och vårdnadshavare' },
-  { key: 'k3', label: 'Åtgärder beslutade och dokumenterade' },
-  { key: 'k4', label: 'Samrådsmöte/handlingsplan upprättad' },
+  { key: 'k1', label: 'Enskilt samtal med eleven genomfört (ev. med stöd från närvaroteamet)' },
+  { key: 'k2', label: 'Hemmet kontaktat via telefon – frånvaro informerad och dokumenterad i Prorenata' },
+  { key: 'k3', label: 'Fysiskt möte bokat med elev och vårdnadshavare (representant från närvaroteamet deltar)' },
+  { key: 'k4', label: 'Mötet genomfört och dokumenterat i Prorenata – anpassningar beslutade' },
+  { key: 'k5', label: 'Uppföljning inplanerad om 2–3 veckor (representant från närvaroteamet analyserar)' },
 ]
 
 const LOG_TYPES = ['Notering', 'Kontakt', 'Möte', 'Kartläggning', 'Utredning']
@@ -16,7 +17,7 @@ export default function MentorView({ students, addLog, toggleSteg2Check, toggleS
   const [activeTab, setActiveTab] = useState('elever')
   const [selectedId, setSelectedId] = useState(null)
   const [showAddForm, setShowAddForm] = useState(false)
-  const [newStudent, setNewStudent] = useState({ name: '', klass: '', dagarIFoljd: 0, separataTillfallen: 0, totalProcent: 0 })
+  const [newStudent, setNewStudent] = useState({ name: '', klass: '', mentor: '', dagarIFoljd: 0, separataTillfallen: 0, totalProcent: 0 })
   const [logText, setLogText] = useState('')
   const [logType, setLogType] = useState('Notering')
 
@@ -33,7 +34,7 @@ export default function MentorView({ students, addLog, toggleSteg2Check, toggleS
     e.preventDefault()
     if (!newStudent.name.trim() || !newStudent.klass.trim()) return
     addStudent(newStudent)
-    setNewStudent({ name: '', klass: '', dagarIFoljd: 0, separataTillfallen: 0, totalProcent: 0 })
+    setNewStudent({ name: '', klass: '', mentor: '', dagarIFoljd: 0, separataTillfallen: 0, totalProcent: 0 })
     setShowAddForm(false)
   }
 
@@ -80,6 +81,7 @@ export default function MentorView({ students, addLog, toggleSteg2Check, toggleS
               <form onSubmit={handleAddStudent} className={styles.formGrid}>
                 <input placeholder="Namn" value={newStudent.name} onChange={e => setNewStudent(p => ({ ...p, name: e.target.value }))} className={styles.input} />
                 <input placeholder="Klass (t.ex. 7A)" value={newStudent.klass} onChange={e => setNewStudent(p => ({ ...p, klass: e.target.value }))} className={styles.input} />
+                <input placeholder="Mentor" value={newStudent.mentor} onChange={e => setNewStudent(p => ({ ...p, mentor: e.target.value }))} className={styles.input} />
                 <div className={styles.absRow}>
                   <label>Dagar i följd</label>
                   <input type="number" min="0" value={newStudent.dagarIFoljd} onChange={e => setNewStudent(p => ({ ...p, dagarIFoljd: Number(e.target.value) }))} className={styles.inputNum} />
@@ -109,7 +111,7 @@ export default function MentorView({ students, addLog, toggleSteg2Check, toggleS
                     <Avatar name={s.name} color={color} />
                     <div className={styles.studentInfo}>
                       <div className={styles.studentName}>{s.name}</div>
-                      <div className={styles.studentKlass}>{s.klass}</div>
+                      <div className={styles.studentKlass}>{s.klass} {s.mentor ? `· Mentor: ${s.mentor}` : ''}</div>
                     </div>
                     <div className={styles.studentStats}>
                       <StatPill label="i följd" value={s.dagarIFoljd} color={s.dagarIFoljd >= 6 ? 'danger' : undefined} />
@@ -173,7 +175,12 @@ export default function MentorView({ students, addLog, toggleSteg2Check, toggleS
                 <Avatar name={selected.name} color={getStegColor(selected.steg)} size="lg" />
                 <div>
                   <div className={styles.trappName}>{selected.name}</div>
-                  <div className={styles.trappKlass}>{selected.klass} · <Badge color={getStegColor(selected.steg)}>{getStegLabel(selected.steg)}</Badge></div>
+                  <div className={styles.trappKlass}>
+                    {selected.klass}
+                    {selected.mentor ? ` · Mentor: ${selected.mentor}` : ''}
+                    {' · '}
+                    <Badge color={getStegColor(selected.steg)}>{getStegLabel(selected.steg)}</Badge>
+                  </div>
                 </div>
               </div>
 
@@ -186,59 +193,75 @@ export default function MentorView({ students, addLog, toggleSteg2Check, toggleS
                 ))}
               </div>
 
+              {/* STEG 1 */}
               <Card className={styles.stegCard}>
                 <div className={`${styles.stegStripe} ${styles.stripe1}`} />
                 <div className={styles.stegContent}>
-                  <div className={styles.stegNum}>Trappsteg 1 – Frånvaro</div>
-                  <div className={styles.stegRole}>Ansvarig: Mentor</div>
+                  <div className={styles.stegNum}>Trappsteg 1 – Förebyggande</div>
+                  <div className={styles.stegRole}>Ansvarig: Mentor (alla lärare)</div>
                   <div className={styles.stegItems}>
                     {[
                       'Registrera frånvaro dagligen i Infomentor',
                       'Veckovisa avstämningar – närvaro som punkt på arbetslagsmöten',
-                      'Kontakta hemmet om orsaken till frånvaro',
+                      'Prata med eleven om frånvaron',
+                      'Kontakta hemmet för att undersöka orsak',
                       'Ta upp närvaro på utvecklingssamtal',
                     ].map((item, i) => <div key={i} className={styles.stegItem}>• {item}</div>)}
+                  </div>
+                  <div className={styles.prorenataNote}>
+                    💡 Stöd finns alltid att få från <strong>Närvaroteamet</strong>: Åsa N, Jenny E, Jenny P, Mustafa och Frida.
                   </div>
                 </div>
               </Card>
 
+              {/* STEG 2 */}
               {selected.steg >= 2 && (
                 <Card className={styles.stegCard}>
                   <div className={`${styles.stegStripe} ${styles.stripe2}`} />
                   <div className={styles.stegContent}>
                     <div className={styles.stegNum}>Trappsteg 2 – Hög frånvaro</div>
-                    <div className={styles.stegRole}>Ansvarig: Mentor + Elevhälsan</div>
+                    <div className={styles.stegRole}>Ansvarig: Mentor + Representant från Närvaroteamet</div>
                     <div className={styles.triggerBox}>
-                      Utlöses vid: 6 dagar i följd, 6 separata tillfällen, eller 15% total frånvaro (utan medicinsk orsak)
+                      Utlöses vid: 6 dagar i följd, 6 separata tillfällen, eller 15% total frånvaro
+                    </div>
+                    <div className={styles.prorenataNote}>
+                      📋 <strong>Kom ihåg:</strong> Alla kontakter och möten ska dokumenteras i <strong>Prorenata</strong>.
                     </div>
                     <div className={styles.checkSection}>
-                      <div className={styles.checkTitle}>Checklista</div>
+                      <div className={styles.checkTitle}>Checklista steg 2</div>
                       {STEG2_ITEMS.map(item => (
                         <CheckItem key={item.key} checked={selected.steg2Checks[item.key]} onClick={() => toggleSteg2Check(selected.id, item.key)}>
                           {item.label}
                         </CheckItem>
                       ))}
                     </div>
+                    {selected.steg2Checks.k5 && (
+                      <div className={styles.rektorNote}>
+                        ✅ Steg 2 klar. Om frånvaron inte förbättras efter uppföljning – <strong>kontakta rektor</strong> för beslut om steg 3.
+                      </div>
+                    )}
                   </div>
                 </Card>
               )}
 
-              {selected.steg >= 3 && (
+              {/* STEG 3 */}
+              {selected.steg === 3 && (
                 <Card className={styles.stegCard}>
                   <div className={`${styles.stegStripe} ${styles.stripe3}`} />
                   <div className={styles.stegContent}>
                     <div className={styles.stegNum}>Trappsteg 3 – Problematisk frånvaro</div>
-                    <div className={styles.stegRole}>Ansvarig: Elevhälsan</div>
+                    <div className={styles.stegRole}>Ansvarig: Elevhälsan (Mentor stöttar)</div>
                     <div className={styles.triggerBox} style={{ background: 'var(--danger-light)', borderColor: '#e8a5a5' }}>
-                      Ärendet överlämnas nu till elevhälsan för fördjupad utredning.
+                      Rektor har beslutat om fördjupad utredning. Ärendet leds nu av Elevhälsan.
                     </div>
                     <div className={styles.checkSection}>
                       <div className={styles.checkTitle}>Status utredning</div>
                       {[
                         { key: 'u1', label: 'Ärendet överlämnat till elevhälsan' },
-                        { key: 'u2', label: 'Fördjupad utredning genomförd' },
-                        { key: 'u3', label: 'Tvärprofessionell analys klar' },
-                        { key: 'u4', label: 'Samråds-/nätverksmöte genomfört' },
+                        { key: 'u2', label: 'Fördjupad utredning påbörjad' },
+                        { key: 'u3', label: 'Tvärprofessionell analys genomförd' },
+                        { key: 'u4', label: 'Samverkan med externa aktörer vid behov (BUP, Socialtjänst, Familjens hus)' },
+                        { key: 'u5', label: 'Samråds-/nätverksmöte genomfört' },
                       ].map(item => (
                         <CheckItem key={item.key} checked={selected.steg3Checks[item.key]} onClick={() => toggleSteg3Check(selected.id, item.key)}>
                           {item.label}
@@ -252,7 +275,7 @@ export default function MentorView({ students, addLog, toggleSteg2Check, toggleS
               {selected.steg < 2 && (
                 <div className={styles.noActionNeeded}>
                   <div className={styles.noActionIcon}>✓</div>
-                  <div>Inga åtgärder krävs ännu. Fortsätt med rutinmässig närvaroregistrering.</div>
+                  <div>Inga åtgärder krävs ännu. Fortsätt med rutinmässig närvaroregistrering i Infomentor.</div>
                 </div>
               )}
             </div>
@@ -282,8 +305,12 @@ export default function MentorView({ students, addLog, toggleSteg2Check, toggleS
                 <Avatar name={selected.name} color={getStegColor(selected.steg)} />
                 <div>
                   <div className={styles.docName}>{selected.name}</div>
-                  <div className={styles.docKlass}>{selected.klass}</div>
+                  <div className={styles.docKlass}>{selected.klass}{selected.mentor ? ` · Mentor: ${selected.mentor}` : ''}</div>
                 </div>
+              </div>
+
+              <div className={styles.prorenataNote} style={{ margin: '0 0 12px 0' }}>
+                📋 Kom ihåg att även dokumentera i <strong>Prorenata</strong> vid steg 2 och 3.
               </div>
 
               <div className={styles.logForm}>
