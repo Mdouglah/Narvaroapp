@@ -45,11 +45,6 @@
   letter-spacing: -0.3px;
 }
 
-.school {
-  font-size: 11px;
-  color: var(--text-muted);
-}
-
 .roleBar {
   display: flex;
   align-items: center;
