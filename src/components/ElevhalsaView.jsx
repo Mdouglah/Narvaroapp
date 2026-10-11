@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { getStegColor, getStegLabel } from '../data.js'
-import { Badge, Avatar, Card, EmptyState, LogEntry, CheckItem, SectionTitle } from './UI.jsx'
+import { Badge, Avatar, Card, EmptyState, LogEntry, CheckItem, SectionTitle, SparaInfo } from './UI.jsx'
 import styles from './ElevhalsaView.module.css'
 
 const LOG_TYPES = ['Notering', 'Kontakt', 'Möte', 'Kartläggning', 'Utredning']
@@ -179,6 +179,7 @@ export default function ElevhalsaView({ students, addLog, toggleSteg3Check }) {
                 />
                 <button className={styles.logBtn} onClick={handleAddLog}>Spara</button>
               </div>
+              <SparaInfo />
               <div>
                 {selected.logs.length === 0
                   ? <EmptyState text="Inga loggposter ännu." />

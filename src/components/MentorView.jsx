@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { getStegColor, getStegLabel } from '../data.js'
-import { Badge, Avatar, Card, StatPill, WarnBanner, EmptyState, LogEntry, CheckItem } from './UI.jsx'
+import { Badge, Avatar, Card, StatPill, WarnBanner, EmptyState, LogEntry, CheckItem, SparaInfo } from './UI.jsx'
 import styles from './MentorView.module.css'
 
 const STEG2_ITEMS = [
@@ -99,6 +99,7 @@ export default function MentorView({ students, addLog, toggleSteg2Check, toggleS
                   <button type="button" className={styles.cancelBtn} onClick={() => setShowAddForm(false)}>Avbryt</button>
                 </div>
               </form>
+              <SparaInfo />
             </Card>
           )}
 
@@ -209,7 +210,7 @@ export default function MentorView({ students, addLog, toggleSteg2Check, toggleS
                     ].map((item, i) => <div key={i} className={styles.stegItem}>• {item}</div>)}
                   </div>
                   <div className={styles.prorenataNote}>
-                    💡 Stöd finns alltid att få från <strong>Närvaroteamet</strong>: Åsa N, Jenny E, Jenny P, Mustafa och Frida.
+                    💡 Stöd finns alltid att få från <strong>Närvaroteamet</strong>.
                   </div>
                 </div>
               </Card>
@@ -326,6 +327,7 @@ export default function MentorView({ students, addLog, toggleSteg2Check, toggleS
                 />
                 <button className={styles.logBtn} onClick={handleAddLog}>Spara</button>
               </div>
+              <SparaInfo />
 
               <div className={styles.logList}>
                 {selected.logs.length === 0

@@ -57,6 +57,14 @@ export function WarnBanner({ children }) {
   return <div className={styles.warnBanner}>{children}</div>
 }
 
+export function SparaInfo() {
+  return (
+    <p className={styles.sparaInfo}>
+      ⚠️ <strong>Uppgifterna sparas inte.</strong> De försvinner när du stänger eller laddar om sidan. Använd hellre initialer än namn.
+    </p>
+  )
+}
+
 export function EmptyState({ text }) {
   return <div className={styles.empty}>{text}</div>
 }
