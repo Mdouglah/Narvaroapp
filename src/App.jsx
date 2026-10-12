@@ -65,6 +65,11 @@ export default function App() {
     <div className={styles.app}>
       <Header role={role} setRole={setRole} />
       <main className={styles.main}>
+        {/* Norvay-tema: layout "stack" med formen "square" */}
+        <section className={styles.hero}>
+          <div className={`${styles.motif} ${styles.motifSquare}`} aria-hidden="true" />
+          <h1 className={styles.heroTitle}>Närvaro<em>appen</em></h1>
+        </section>
         {role === 'mentor' && (
           <MentorView
             students={enriched}

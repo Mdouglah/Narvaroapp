@@ -252,7 +252,7 @@ export default function MentorView({ students, addLog, toggleSteg2Check, toggleS
                   <div className={styles.stegContent}>
                     <div className={styles.stegNum}>Trappsteg 3 – Problematisk frånvaro</div>
                     <div className={styles.stegRole}>Ansvarig: Elevhälsan (Mentor stöttar)</div>
-                    <div className={styles.triggerBox} style={{ background: 'var(--danger-light)', borderColor: '#e8a5a5' }}>
+                    <div className={styles.triggerBox} style={{ background: 'var(--danger-light)', borderColor: 'var(--danger-line)' }}>
                       Rektor har beslutat om fördjupad utredning. Ärendet leds nu av Elevhälsan.
                     </div>
                     <div className={styles.checkSection}>

@@ -37,9 +37,9 @@
   font-size: 13px;
   padding: 6px 14px;
   background: var(--accent);
-  color: white;
+  color: var(--on-accent);
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: 999px;
   font-weight: 500;
   transition: opacity 0.15s;
 }
@@ -78,9 +78,9 @@
   padding: 7px 18px;
   font-size: 13px;
   background: var(--accent);
-  color: white;
+  color: var(--on-accent);
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: 999px;
   font-weight: 500;
 }
 .cancelBtn {
@@ -89,7 +89,7 @@
   background: none;
   color: var(--text-secondary);
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  border-radius: 999px;
 }
 
 .studentList { display: flex; flex-direction: column; gap: 10px; }
@@ -112,7 +112,7 @@
   padding: 7px 14px;
   background: none;
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  border-radius: 999px;
   color: var(--accent);
   font-weight: 500;
   transition: background 0.15s;
@@ -138,7 +138,7 @@
 .pickerBtn.pickerActive { border-color: var(--accent); color: var(--accent-text); background: var(--accent-light); font-weight: 500; }
 
 .trappHeader { display: flex; align-items: center; gap: 14px; margin-bottom: 1.5rem; }
-.trappName { font-size: 18px; font-weight: 600; letter-spacing: -0.3px; }
+.trappName { font-family: var(--n-font-display); font-size: 22px; font-weight: 400; letter-spacing: -0.01em; }
 .trappKlass { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-top: 2px; }
 
 .stepProgress { display: flex; align-items: center; margin-bottom: 1.5rem; }
@@ -155,7 +155,7 @@
   flex-shrink: 0;
   transition: all 0.2s;
 }
-.stepDotActive { background: var(--accent); color: white; border-color: var(--accent); }
+.stepDotActive { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 .stepDotDone { background: var(--accent-light); color: var(--accent-text); border-color: var(--accent); }
 .stepLine { flex: 1; height: 2px; background: var(--border); margin: 0 4px; }
 .stepLineDone { background: var(--accent); }
@@ -174,7 +174,7 @@
   font-size: 12.5px;
   color: var(--warn-text);
   background: var(--warn-light);
-  border: 1px solid #e8c97a;
+  border: 1px solid var(--warn-line);
   border-radius: var(--radius-sm);
   padding: 8px 12px;
   margin-bottom: 12px;
@@ -187,7 +187,7 @@
   align-items: center;
   gap: 12px;
   background: var(--accent-light);
-  border: 1px solid #9bcfac;
+  border: 1px solid var(--accent-line);
   border-radius: var(--radius);
   padding: 1rem 1.25rem;
   font-size: 14px;
@@ -225,9 +225,9 @@
   padding: 8px 16px;
   font-size: 13px;
   background: var(--accent);
-  color: white;
+  color: var(--on-accent);
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: 999px;
   font-weight: 500;
 }
 .logList {}

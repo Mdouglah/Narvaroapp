@@ -7,35 +7,59 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ===== Norvay-tema (samma som kuratorn-allman/src/theme.css), kategori skola ===== */
 :root {
-  --bg: #f4f2ed;
-  --surface: #ffffff;
-  --surface2: #ece9e2;
-  --border: #ddd9d0;
-  --border-strong: #b8b3a8;
-  --text: #1a1916;
-  --text-secondary: #6b6760;
-  --text-muted: #9c9890;
-  --accent: #2d5a3d;
-  --accent-light: #e8f0eb;
-  --accent-text: #1a3d27;
+  --n-bg: #f5f3ec;
+  --n-surface: #ffffff;
+  --n-ink: #123f37;
+  --n-ink-soft: #4f6b63;
+  --n-line: rgba(18, 63, 55, 0.14);
+  --n-terracotta: #c9785f;       /* bara för stor text och former */
+  --n-terracotta-soft: #dd9479;
+  --n-radius: 20px;
+  --n-radius-sm: 12px;
+  --n-font-display: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --n-font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --n-accent: #2f6b5a;
+  --n-tint: #d7e2d7;
+  --n-on-accent: #ffffff;
+}
+
+/* ===== Appens färger (ändra här) – kopplade till Norvay-temat ===== */
+:root {
+  --bg: var(--n-bg);
+  --surface: var(--n-surface);
+  --surface2: #ebe8df;
+  --border: var(--n-line);
+  --border-strong: rgba(18, 63, 55, 0.32);
+  --text: var(--n-ink);
+  --text-secondary: #2f4d46;          /* brödtext i listor (förut grå) */
+  --text-muted: var(--n-ink-soft);    /* dämpad text – nu med godkänd kontrast (förut 2,8:1) */
+  --accent: var(--n-accent);
+  --accent-light: var(--n-tint);
+  --accent-text: var(--n-ink);
+  --accent-line: rgba(47, 107, 90, 0.45);  /* ram runt grön ruta */
+  --on-accent: var(--n-on-accent);    /* text på accentfärg */
+  /* Statusfärger (oförändrade – de betyder något: varning, problem, info) */
   --warn: #7a4f1a;
   --warn-light: #fef3e2;
   --warn-text: #5a3a12;
+  --warn-line: #e8c97a;
   --danger: #7a1f1f;
   --danger-light: #fdeaea;
   --danger-text: #5a1515;
+  --danger-line: #e8a5a5;
   --info: #1a3d6b;
   --info-light: #e8eff8;
   --info-text: #122952;
-  --radius: 10px;
-  --radius-sm: 6px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+  --radius: var(--n-radius);          /* kort */
+  --radius-sm: 8px;                   /* fält och små rutor – lätt rundade för överskådlighet */
+  --shadow: none;                     /* Norvay-kort har ram i stället för skugga */
+  --shadow-md: none;
 }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--n-font-body);
   background: var(--bg);
   color: var(--text);
   font-size: 15px;
@@ -44,13 +68,18 @@ body {
 }
 
 button {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--n-font-body);
   cursor: pointer;
 }
 
 input, select, textarea {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--n-font-body);
   font-size: 14px;
+}
+
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
 ::-webkit-scrollbar { width: 6px; }

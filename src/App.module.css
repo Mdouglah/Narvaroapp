@@ -11,3 +11,28 @@
   width: 100%;
   padding: 2rem 1.5rem;
 }
+
+/* Norvay-tema: sidhuvud med layout "stack" och formen "square" */
+.hero {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+  margin-bottom: 2rem;
+}
+.heroTitle {
+  font-family: var(--n-font-display);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.heroTitle em { font-style: italic; color: #a4533c; } /* mörkare terrakotta – kontrast mot ljus bakgrund */
+.motif { position: relative; width: 110px; aspect-ratio: 1; }
+.motif::before, .motif::after { content: ""; position: absolute; }
+.motifSquare::before { inset: 14%; background: var(--n-tint); border-radius: 28%; transform: rotate(8deg); }
+.motifSquare::after  { width: 30%; aspect-ratio: 1; background: var(--n-terracotta-soft); border-radius: 50%; bottom: 6%; right: 8%; }
+
+@media (max-width: 600px) {
+  .motif { width: 84px; }
+}

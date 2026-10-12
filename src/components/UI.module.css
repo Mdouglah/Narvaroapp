@@ -86,14 +86,14 @@
 .checkbox.checked {
   background: var(--accent);
   border-color: var(--accent);
-  color: white;
+  color: var(--on-accent);
 }
 .checkText { font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; }
 .checkTextDone { color: var(--text-muted); text-decoration: line-through; }
 
 .warnBanner {
   background: var(--warn-light);
-  border: 1px solid #e8c97a;
+  border: 1px solid var(--warn-line);
   border-radius: var(--radius);
   padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
@@ -104,7 +104,7 @@
   line-height: 1.5;
   color: var(--warn-text);
   background: var(--warn-light);
-  border: 1px solid #e8c97a;
+  border: 1px solid var(--warn-line);
   border-radius: var(--radius-sm);
   padding: 8px 12px;
   margin: 10px 0 12px;

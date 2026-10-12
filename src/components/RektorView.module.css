@@ -14,8 +14,9 @@
 }
 
 .metricVal {
-  font-size: 32px;
-  font-weight: 600;
+  font-family: var(--n-font-display);
+  font-size: 34px;
+  font-weight: 400;
   line-height: 1;
   letter-spacing: -1px;
   margin-bottom: 6px;
@@ -35,7 +36,7 @@
 
 .alertCard {
   margin-bottom: 1.5rem;
-  border-color: #e8a5a5;
+  border-color: var(--danger-line);
   background: var(--danger-light);
 }
 
@@ -51,7 +52,7 @@
   align-items: center;
   gap: 10px;
   padding: 6px 0;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid var(--border);
 }
 .alertRow:last-child { border-bottom: none; }
 
