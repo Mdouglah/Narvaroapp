@@ -5,6 +5,7 @@ import MentorView from './components/MentorView.jsx'
 import ElevhalsaView from './components/ElevhalsaView.jsx'
 import RektorView from './components/RektorView.jsx'
 import styles from './App.module.css'
+import { NorvayFooter } from './NorvayBar.jsx'
 
 export default function App() {
   const [role, setRole] = useState('mentor')
@@ -94,6 +95,7 @@ export default function App() {
           />
         )}
       </main>
+      <NorvayFooter />
     </div>
   )
 }

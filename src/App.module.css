@@ -27,7 +27,7 @@
   letter-spacing: -0.01em;
   color: var(--text);
 }
-.heroTitle em { font-style: italic; color: #a4533c; } /* mörkare terrakotta – kontrast mot ljus bakgrund */
+.heroTitle em { font-style: italic; color: var(--terracotta-ink); } /* mörkare terrakotta – kontrast mot ljus bakgrund */
 .motif { position: relative; width: 110px; aspect-ratio: 1; }
 .motif::before, .motif::after { content: ""; position: absolute; }
 .motifSquare::before { inset: 14%; background: var(--n-tint); border-radius: 28%; transform: rotate(8deg); }

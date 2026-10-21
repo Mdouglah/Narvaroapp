@@ -56,6 +56,27 @@
   --radius-sm: 8px;                   /* fält och små rutor – lätt rundade för överskådlighet */
   --shadow: none;                     /* Norvay-kort har ram i stället för skugga */
   --shadow-md: none;
+  --terracotta-ink: #a4533c;          /* mörkare terrakotta för stor rubrik (kontrast) */
+}
+
+/* ===== Nattläge (samma grundfärger som Norvays mörka läge) ===== */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --n-bg: #0f2a24; --n-surface: #163731; --n-ink: #ece7da; --n-ink-soft: #a9bdb5;
+  --n-line: rgba(236, 231, 218, 0.14);
+  --n-terracotta: #e3a58f; --n-terracotta-soft: #d08a72;
+  --n-accent: #8fc2a8; --n-tint: #1f4239; --n-on-accent: #0f2a24;
+  --surface2: #1c3d35;
+  --border-strong: rgba(236, 231, 218, 0.32);
+  --text-secondary: #d5ddd8;
+  --accent-line: rgba(143, 194, 168, 0.45);
+  --warn: #f0c98f; --warn-light: #3a3123; --warn-text: #f0d6a8; --warn-line: #6b5530;
+  --danger: #f0a99a; --danger-light: #3b2a24; --danger-text: #f4c0b4; --danger-line: #6b3a30;
+  --info: #a9c6e8; --info-light: #22343c; --info-text: #c9dbef;
+  --terracotta-ink: #e3a58f;
+}
+@media print {
+  :root[data-theme="dark"] { --n-bg: #ffffff; --n-surface: #ffffff; --n-ink: #123f37; --n-ink-soft: #4f6b63; --n-line: rgba(18,63,55,.14); --n-accent: #2f6b5a; --n-tint: #d7e2d7; --n-on-accent: #ffffff; --surface2: #ebe8df; --text-secondary: #2f4d46; --warn: #7a4f1a; --warn-light: #fef3e2; --warn-text: #5a3a12; --danger: #7a1f1f; --danger-light: #fdeaea; --danger-text: #5a1515; --info: #1a3d6b; --info-light: #e8eff8; --info-text: #122952; --terracotta-ink: #a4533c; }
 }
 
 body {
@@ -78,6 +99,8 @@ input, select, textarea {
 }
 
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+/* Gemensam sidfot: samma marginaler som appens innehåll */
+.norvay-footer { padding: 0 20px 32px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
