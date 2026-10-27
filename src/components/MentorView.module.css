@@ -1,5 +1,6 @@
 .tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 0;
   border-bottom: 1px solid var(--border);
   margin-bottom: 1.5rem;
@@ -100,6 +101,13 @@
 .studentName { font-size: 14px; font-weight: 500; }
 .studentKlass { font-size: 12px; color: var(--text-muted); }
 .studentStats { display: flex; gap: 6px; }
+
+@media (max-width: 600px) {
+  .studentRow { flex-wrap: wrap; }
+  .studentInfo { min-width: 0; }
+  .studentRow > span { flex-shrink: 0; white-space: nowrap; }
+  .studentStats { order: 1; flex-basis: 100%; flex-wrap: wrap; }
+}
 
 .expandedStudent { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
 .absenceEdit { margin-bottom: 12px; }
